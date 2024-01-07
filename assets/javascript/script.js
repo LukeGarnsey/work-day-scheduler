@@ -30,14 +30,14 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
   
-  createTimeBlock("3pm", "future");
+  createTimeBlock("3PM", "future");
+  allTimeBlocks();
 });
-// function createPastContainer(time){
-//   var container = createTimeBlock(time);
-//   container.addClass("row time-block past");
-//   $("#time-container").append(container);
-// }
+function allTimeBlocks(){
+  createTimeBlock("9AM", "past")
+}
 function createTimeBlock(time, timeClass){
+  var id = "hour-"+time[0];
   var containerElement = $("<div>");
   containerElement.addClass("row time-block");
   containerElement.addClass(timeClass);
@@ -45,10 +45,21 @@ function createTimeBlock(time, timeClass){
   timeElement.text(time);
   timeElement.addClass("col-2 col-md-1 hour text-center py-3");
   containerElement.append(timeElement);
+  let textAreaElement = createTextArea(id);
+  containerElement.append(textAreaElement);
+  containerElement.append(createButton(textAreaElement, id));
+  containerElement.attr("id", id);
+  $("#time-container").append(containerElement);
+}
+function createTextArea(id){
   var textArea = $("<textarea>");
   textArea.addClass("col-8 col-md-10 description");
   textArea.attr("rows", "3");
-  containerElement.append(textArea);
+  textArea.val(checkStorage(id));
+  return textArea;
+}
+function createButton(textAreaElement, id){
+  console.log(id);
   var button = $("<button>");
   button.addClass("btn saveBtn col-2 col-md-1");
   button.attr("aria-label", "save");
@@ -56,9 +67,17 @@ function createTimeBlock(time, timeClass){
   i.addClass("fas fa-save");
   i.attr("aria-hidden", "true");
   button.append(i);
-  containerElement.append(button);
-  $("#time-container").append(containerElement);
+  button.on("click", function(){
+    localStorage.setItem(id, $(textAreaElement).val());
+  });
+  return button
 }
+function checkStorage(id){
+  var item = localStorage.getItem(id);
+  if(item === null)
+    item = "";
 
+  return item;
+}
 
 
