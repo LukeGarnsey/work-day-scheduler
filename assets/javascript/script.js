@@ -2,6 +2,15 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+  console.log("GO GO GO GO ");
+  // console.log(window.dayjs_plugin_utc);
+  // dayjs.extend(window.dayjs_plugin_utc);
+  // console.log(dayjs().format("Do"));
+  // var now = dayjs();
+  // var advancedFormat = require('dayjs/plugin/advancedFormat')
+  // dayjs.extend(advancedFormat)
+  
+  $("#currentDay").text(dayjs().format("dddd, MMMM DD") );
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -20,4 +29,36 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  
+  createTimeBlock("3pm", "future");
 });
+// function createPastContainer(time){
+//   var container = createTimeBlock(time);
+//   container.addClass("row time-block past");
+//   $("#time-container").append(container);
+// }
+function createTimeBlock(time, timeClass){
+  var containerElement = $("<div>");
+  containerElement.addClass("row time-block");
+  containerElement.addClass(timeClass);
+  var timeElement = $("<div>");
+  timeElement.text(time);
+  timeElement.addClass("col-2 col-md-1 hour text-center py-3");
+  containerElement.append(timeElement);
+  var textArea = $("<textarea>");
+  textArea.addClass("col-8 col-md-10 description");
+  textArea.attr("rows", "3");
+  containerElement.append(textArea);
+  var button = $("<button>");
+  button.addClass("btn saveBtn col-2 col-md-1");
+  button.attr("aria-label", "save");
+  var i = $("<i>");
+  i.addClass("fas fa-save");
+  i.attr("aria-hidden", "true");
+  button.append(i);
+  containerElement.append(button);
+  $("#time-container").append(containerElement);
+}
+
+
+
