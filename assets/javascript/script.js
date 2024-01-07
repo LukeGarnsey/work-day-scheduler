@@ -1,7 +1,7 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
-
+var timeout = undefined;
 $(function () {
   // dayjs.extend(window.dayjs_plugin_utc);
   // console.log(dayjs().format("Do"));
@@ -72,7 +72,18 @@ function createButton(textAreaElement, id){
   i.attr("aria-hidden", "true");
   button.append(i);
   button.on("click", function(){
-    localStorage.setItem(id, $(textAreaElement).val());
+    let text = $(textAreaElement).val();
+    if(text === "")
+      return;
+    localStorage.setItem(id, text);
+    if(timeout !== undefined)
+      clearTimeout(timeout);
+      
+    timeout = setTimeout(() => {
+      $("#header-saved").css("display", "none");
+      timeout = undefined;
+    }, 2000);
+    $("#header-saved").css("display", "block");
   });
   return button
 }
