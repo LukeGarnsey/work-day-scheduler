@@ -1,15 +1,13 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
+
 $(function () {
-  console.log("GO GO GO GO ");
-  // console.log(window.dayjs_plugin_utc);
   // dayjs.extend(window.dayjs_plugin_utc);
   // console.log(dayjs().format("Do"));
   // var now = dayjs();
   // var advancedFormat = require('dayjs/plugin/advancedFormat')
   // dayjs.extend(advancedFormat)
-  
   $("#currentDay").text(dayjs().format("dddd, MMMM DD") );
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
@@ -29,15 +27,21 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+  let currentHour = parseInt(dayjs().format("H"));
   
-  createTimeBlock("3PM", "future");
-  allTimeBlocks();
+  for(let i = 9; i<=17; i++){
+    timeclass = "present";
+    if(i < currentHour)
+      timeclass = "past";
+    else if(i > currentHour)
+      timeclass = "future";
+    
+    createTimeBlock((i > 12? (i - 12)+"PM" : i + "AM"), timeclass);
+  }
 });
-function allTimeBlocks(){
-  createTimeBlock("9AM", "past")
-}
 function createTimeBlock(time, timeClass){
-  var id = "hour-"+time[0];
+  console.log(time);
+  var id = "hour-"+time.substring(0, time.length - 2);
   var containerElement = $("<div>");
   containerElement.addClass("row time-block");
   containerElement.addClass(timeClass);
