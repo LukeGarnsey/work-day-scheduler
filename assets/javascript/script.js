@@ -3,6 +3,7 @@
 // in the html.
 var timeout = undefined;
 $(function () {
+  
   // dayjs.extend(window.dayjs_plugin_utc);
   // console.log(dayjs().format("Do"));
   // var now = dayjs();
@@ -72,13 +73,10 @@ function createButton(textAreaElement, id){
   i.attr("aria-hidden", "true");
   button.append(i);
   button.on("click", function(){
-    let text = $(textAreaElement).val();
-    if(text === "")
-      return;
-    localStorage.setItem(id, text);
+    localStorage.setItem(id, $(textAreaElement).val());
     if(timeout !== undefined)
       clearTimeout(timeout);
-      
+
     timeout = setTimeout(() => {
       $("#header-saved").css("display", "none");
       timeout = undefined;
