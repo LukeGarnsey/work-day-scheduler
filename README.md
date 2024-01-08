@@ -5,4 +5,4 @@ Events will persist day to day and time blocks states are updated to past/presen
 
 [https://lukegarnsey.github.io/work-day-scheduler/](https://lukegarnsey.github.io/work-day-scheduler/)
 
-![alt text](./assets/readme-images/main.png)
+![alt text](./assets/readme-images/screenshot.png)
